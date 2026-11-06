@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4e8d6">
+<meta name="description" content="dearly — little letters, wrapped in warmth.">
+<title>dearly — a little letter for you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Handlee&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#f4e8d6;--bg2:#ead4bd;--paper:#fff9ef;--ink:#493329;--muted:#947766;
+ --honey:#c88c4a;--terra:#b96f55;--rose:#c58b83;--line:#e8d5c0;
+ --shadow:0 18px 45px rgba(105,67,42,.14),inset 0 1px 0 rgba(255,255,255,.8);
+ --soft:0 8px 22px rgba(105,67,42,.12);--radius:28px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100svh;color:var(--ink);font-family:"DM Sans",sans-serif;
+ background:radial-gradient(ellipse at 50% 0%,#fff6e8 0,transparent 42%),linear-gradient(155deg,var(--bg),var(--bg2));
+ overflow-x:hidden;transition:background .8s,color .5s}
+body.dark{--bg:#211b1a;--bg2:#342522;--paper:#392c27;--ink:#f4e4d2;--muted:#c1a18c;--line:#5b4439;--shadow:0 18px 45px #120d0b80,inset 0 1px 0 #ffffff12;--soft:0 8px 22px #120d0b80;background:radial-gradient(ellipse at 50% 0%,#533b2b 0,transparent 45%),linear-gradient(155deg,var(--bg),var(--bg2))}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--honey);outline-offset:3px}
+#dust{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.mote{position:absolute;width:4px;height:4px;border-radius:50%;background:#f5c879;opacity:.45;box-shadow:0 0 12px #f5c879;animation:float 13s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translate3d(0,15px,0);opacity:.15}50%{transform:translate3d(14px,-45px,0);opacity:.65}}
+main{position:relative;z-index:1;width:min(100%,560px);margin:auto;padding:18px 18px 48px}
+.topbar{height:44px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:"Playfair Display",serif;font-size:23px;letter-spacing:.02em}
+.top-actions{display:flex;gap:9px}
+.icon-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:var(--paper);color:var(--ink);box-shadow:var(--soft);font-size:17px}
+.screen{display:none;min-height:calc(100svh - 115px);align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px 4px 35px;animation:appear .55s ease both}
+.screen.active{display:flex}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{font-size:11px;letter-spacing:.19em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1,h2{font-family:"Playfair Display",serif;font-weight:600;line-height:1.12;margin:12px 0;color:var(--ink)}
+h1{font-size:clamp(36px,9vw,52px)}h2{font-size:clamp(28px,7vw,38px)}
+.sub{max-width:340px;color:var(--muted);font-size:14px;line-height:1.7;margin:8px auto 22px}
+.envelope-wrap{position:relative;width:min(82vw,330px);height:230px;margin:28px auto 20px;filter:drop-shadow(0 20px 22px #79533330)}
+.envelope{position:absolute;inset:20px 0 0;background:linear-gradient(145deg,#e8bd82,#c88c58);border-radius:17px;overflow:hidden;box-shadow:var(--shadow)}
+.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(35deg,transparent 49.5%,#f5d5a6 50%,transparent 50.7%),linear-gradient(-35deg,transparent 49.5%,#f0c994 50%,transparent 50.7%);opacity:.9}
+.flap{position:absolute;top:20px;left:0;width:100%;height:130px;clip-path:polygon(0 0,100% 0,50% 100%);background:linear-gradient(160deg,#f5d7a7,#d99d65);transform-origin:top;transition:transform .9s cubic-bezier(.2,.8,.2,1);z-index:2}
+.seal{position:absolute;z-index:3;left:50%;top:104px;transform:translateX(-50%);width:55px;height:55px;border-radius:50%;display:grid;place-items:center;color:#f8e8d0;background:radial-gradient(circle at 35% 28%,#d99a82,#98513e 70%);box-shadow:0 5px 12px #70402d55,inset 0 2px 5px #ffffff55;font-size:23px;transition:all .45s}
+.envelope.open .flap{transform:rotateX(180deg);z-index:0}.envelope.open .seal{opacity:0;transform:translate(-50%,-28px) scale(.4)}
+.envelope.open{animation:pop .55s ease}@keyframes pop{50%{filter:brightness(1.13)}}
+.glow{position:absolute;inset:0;border-radius:50%;background:#f4c879;filter:blur(35px);opacity:.28;animation:pulse 3.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.55;transform:scale(1.1)}}
+.primary{border:0;border-radius:999px;padding:16px 25px;min-height:56px;background:linear-gradient(135deg,#b96f55,#99533f);color:#fff8ed;font-weight:700;box-shadow:0 10px 22px #96553c40, inset 0 1px 0 #ffffff55;transition:transform .2s,filter .2s}
+.primary:active{transform:scale(.97)}.primary:disabled{opacity:.45;cursor:not-allowed}
+.text-btn{border:0;background:transparent;color:var(--muted);padding:12px}
+.step-card{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:25px 20px;box-shadow:var(--shadow);text-align:left}
+.progress-row{display:flex;align-items:center;gap:12px;margin:0 0 20px}
+.progress-track{height:7px;background:var(--line);border-radius:20px;flex:1;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--terra),var(--honey));border-radius:20px;transition:width .7s}
+.flame{font-size:25px;filter:drop-shadow(0 0 8px #e4a54d);transition:transform .3s}
+.step-card h2{margin:0 0 8px}.step-card .sub{margin:0 0 20px;max-width:none}
+.field{width:100%;padding:15px 16px;border:1px solid var(--line);border-radius:17px;background:color-mix(in srgb,var(--paper),var(--bg) 35%);color:var(--ink);font-size:16px}
+textarea.field{resize:vertical;min-height:120px;line-height:1.6}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0 22px}
+.choice{border:1px solid var(--line);border-radius:18px;padding:15px 10px;background:color-mix(in srgb,var(--paper),var(--bg) 30%);color:var(--ink);min-height:62px;text-align:center;transition:.2s}
+.choice.selected{border-color:var(--terra);background:color-mix(in srgb,var(--rose),var(--paper) 80%);box-shadow:inset 0 0 0 1px var(--terra)}
+.step-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px}
+.tease{color:var(--muted);font-family:"Caveat",cursive;font-size:21px;margin:16px 0 0}
+.options{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0}
+.chip{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:11px 15px;min-height:44px}
+.chip.active{background:#ead0b4;border-color:var(--honey);color:#513729}
+.paper-preview{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:8px 24px 24px 8px;padding:27px 22px;text-align:left;box-shadow:var(--shadow);position:relative;min-height:230px}
+.paper-preview:before{content:"";position:absolute;left:12px;top:0;bottom:0;border-left:1px dashed var(--rose);opacity:.6}
+.paper-preview .letter-body{font-family:var(--letter,"Caveat"),cursive;font-size:24px;line-height:1.45;white-space:pre-wrap;padding-left:12px}
+.paper-preview .to{font-family:var(--letter,"Caveat"),cursive;font-size:23px;color:var(--terra);padding-left:12px}
+.sticker{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:17px;background:#f1dfc6;box-shadow:var(--soft);font-size:29px;margin:7px;touch-action:none;user-select:none}
+.sticker:active{cursor:grabbing}
+.preview-box{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow);width:100%;margin:16px 0}
+.shelf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;margin-top:18px}
+.shelf-item{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:15px;text-align:left;box-shadow:var(--soft);font-size:13px}
+.shelf-item strong{display:block;font-family:"Playfair Display",serif;font-size:16px;margin-bottom:6px}
+.hidden{display:none!important}
+#sparkle{position:fixed;pointer-events:none;z-index:10;font-size:18px;opacity:0;transform:translate(-50%,-50%)}
+.stars{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;animation:burst 1.3s ease-out forwards;font-size:17px}
+@keyframes burst{0%{opacity:0;transform:translate(0,0) scale(.3)}20%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.2)}}
+.footer-note{font-size:11px;color:var(--muted);margin-top:24px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(min-width:600px){main{padding-top:24px}.screen{min-height:calc(100svh - 130px)}}
+</style>
+</head>
+<body>
+<div id="dust" aria-hidden="true"></div><div id="sparkle" aria-hidden="true">✦</div>
+<main>
+ <header class="topbar"><div class="brand">dearly<span style="color:var(--terra)">.</span></div><div class="top-actions"><button class="icon-btn" id="mode" aria-label="Toggle light and dark mode">☾</button><button class="icon-btn" id="shelfBtn" aria-label="Open your letter shelf">▤</button></div></header>
+ <section class="screen active" id="welcome">
+  <div class="eyebrow">a little something, just for you</div>
+  <h1>Someone wrote<br>you something.</h1>
+  <p class="sub">A small note, wrapped in a little warmth.<br>Ready?</p>
+  <div class="envelope-wrap"><div class="glow"></div><div class="envelope" id="heroEnvelope"><div class="flap"></div><div class="seal">♥</div></div><div class="stars" id="burst"></div></div>
+  <button class="primary" id="openStart" style="width:min(100%,310px)">Tap to open <span aria-hidden="true">↗</span></button>
+  <div class="footer-note">made slowly, sent with love</div>
+ </section>
+ <section class="screen" id="wizard">
+  <div class="step-card">
+   <div class="progress-row"><span class="flame" id="flame">🕯️</span><div class="progress-track"><div class="progress-fill" id="progress"></div></div><span class="eyebrow" id="stepCount">01 / 05</span></div>
+   <div id="stepContent"></div>
+   <div class="step-actions"><button class="text-btn" id="back">← Back</button><button class="primary" id="next">Continue →</button></div>
+   <div class="tease" id="tease">A little note can hold a lot.</div>
+  </div>
+ </section>
+ <section class="screen" id="design">
+  <div class="eyebrow">the little details</div><h2>Make it feel like them.</h2><p class="sub">Choose a paper, a mood, and a handwriting style.</p>
+  <div class="step-card">
+   <label class="eyebrow">paper style</label><div class="options" id="papers"><button class="chip active" data-paper="cream">Cream ✧</button><button class="chip" data-paper="lined">Lined</button><button class="chip" data-paper="rose">Rose wash</button><button class="chip" data-paper="night">Midnight</button></div>
+   <label class="eyebrow">mood weather</label><div class="options" id="weather"><button class="chip active" data-weather="☀️ Sunny">☀️ Sunny</button><button class="chip" data-weather="🌙 Starry night">🌙 Starry night</button></div>
+   <label class="eyebrow">handwriting</label><div class="options" id="fonts"><button class="chip active" data-font="Caveat">Caveat</button><button class="chip" data-font="Handlee">Handlee</button><button class="chip" data-font="Great Vibes">Great Vibes</button><button class="chip" data-font="serif">Classic serif</button></div>
+   <label class="eyebrow">little stickers</label><div class="options" id="stickers"><button class="sticker" draggable="true" aria-label="Heart sticker">♥</button><button class="sticker" draggable="true" aria-label="Flower sticker">🌼</button><button class="sticker" draggable="true" aria-label="Star sticker">✦</button><button class="sticker" draggable="true" aria-label="Moon sticker">☾</button></div>
+   <p class="sub" style="text-align:left;margin:8px 0">Drag a sticker onto your letter. On touch screens, tap one to add it.</p>
+   <div class="paper-preview" id="designPreview"><div class="to" id="previewTo">Dear you,</div><div class="letter-body" id="previewBody">You make ordinary days feel a little softer.</div><div id="placed"></div></div>
+   <div class="step-actions"><button class="text-btn" id="designBack">← Back</button><button class="primary" id="toExtras">Next →</button></div>
+  </div><p class="tease">Next: one last little touch ✨</p>
+ </section>
+ <section class="screen" id="extras">
+  <div class="eyebrow">one last little touch</div><h2>Keep a piece of your voice.</h2><p class="sub">Add a voice note, or keep your words just as they are.</p>
+  <div class="step-card">
+   <label class="eyebrow" for="voice">voice note (optional)</label><p class="sub" style="text-align:left">Record a short hello on this device. It stays in this page preview only.</p>
+   <button class="chip" id="record">● Start recording</button> <button class="chip" id="stopRecord" disabled>Stop</button><audio id="audio" controls class="hidden" style="width:100%;margin-top:12px"></audio>
+   <hr style="border:0;border-top:1px solid var(--line);margin:22px 0">
+   <label class="eyebrow" for="pin">private PIN (optional)</label><input class="field" id="pin" inputmode="numeric" maxlength="6" placeholder="Set a 4–6 digit PIN">
+   <label class="eyebrow" for="lockDate" style="display:block;margin-top:18px">open on (optional)</label><input class="field" id="lockDate" type="date">
+   <div class="step-actions"><button class="text-btn" id="extrasBack">← Back</button><button class="primary" id="toSeal">Seal my letter →</button></div>
+  </div>
+ </section>
+ <section class="screen" id="seal">
+  <div class="eyebrow">a little note, all yours</div><h2>Almost there…<br>add your seal.</h2><p class="sub">One last look before it’s wrapped up.</p>
+  <div class="preview-box"><div class="paper-preview" id="finalPaper"><div class="to" id="finalTo">Dear you,</div><div class="letter-body" id="finalBody"></div><div id="finalStickers"></div></div><p id="sealMeta" class="sub"></p></div>
+  <button class="primary" id="sealIt" style="width:100%">Seal it with a little love ♥</button>
+  <button class="text-btn" id="sealBack">Make a change</button>
+ </section>
+ <section class="screen" id="done">
+  <div class="eyebrow">sealed with love</div><h2>This will make<br>their day.</h2><p class="sub">Your letter is ready for its little journey.</p>
+  <div class="envelope-wrap"><div class="glow"></div><div class="envelope"><div class="flap"></div><div class="seal">♥</div></div><div class="stars" id="finalBurst"></div></div>
+  <div class="preview-box"><div class="eyebrow">their first glimpse</div><h2 style="font-size:25px" id="mystery">Open when the moment feels right…</h2><p class="sub" id="friendPreview"></p></div>
+  <button class="primary" id="send" style="width:100%">Send it with love ↗</button>
+  <p class="sub" id="shareStatus" aria-live="polite">Share a preview link or save it to your shelf.</p>
+  <button class="chip" id="saveShelf">♡ Save to my shelf</button>
+  <button class="text-btn" id="writeBack">Write another letter</button>
+ </section>
+ <section class="screen" id="shelf">
+  <div class="eyebrow">kept close</div><h2>Your little shelf.</h2><p class="sub">Letters you’ve saved on this device.</p><div class="shelf-grid" id="shelfGrid"></div><button class="primary" id="shelfHome" style="margin-top:22px">Write a new letter</button>
+ </section>
+</main>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const data={to:"",mood:"Warm and loved",message:"",paper:"cream",weather:"☀️ Sunny",font:"Caveat",stickers:[],pin:"",date:""};
+let step=0,recorder=null,recordedUrl=null;
+function show(id){$$('.screen').forEach(s=>s.classList.toggle('active',s.id===id));window.scrollTo({top:0,behavior:'smooth'})}
+function sparkle(x,y){const el=$('#sparkle');el.style.left=x+'px';el.style.top=y+'px';el.style.opacity=1;el.textContent=['✦','✧','·','♥'][Math.floor(Math.random()*4)];setTimeout(()=>el.style.opacity=0,500)}
+document.addEventListener('pointerdown',e=>sparkle(e.clientX,e.clientY));
+for(let i=0;i<24;i++){let m=document.createElement('i');m.className='mote';m.style.left=Math.random()*100+'%';m.style.top=Math.random()*100+'%';m.style.animationDelay=(-Math.random()*13)+'s';m.style.animationDuration=(10+Math.random()*9)+'s';$('#dust').append(m)}
+$('#mode').onclick=()=>{document.body.classList.toggle('dark');$('#mode').textContent=document.body.classList.contains('dark')?'☀':'☾'};
+$('#openStart').onclick=()=>{$('#heroEnvelope').classList.add('open');burst('#burst');setTimeout(()=>{step=0;renderStep();show('wizard')},700)};
+function burst(selector){const box=$(selector);box.innerHTML='';for(let i=0;i<14;i++){let s=document.createElement('span');s.className='star';s.textContent=['✦','✧','·','♥'][i%4];s.style.left='50%';s.style.top='55%';s.style.setProperty('--x',(Math.random()*240-120)+'px');s.style.setProperty('--y',(Math.random()*-180-20)+'px');box.append(s)}}
+const steps=[
+ {title:'Who is this for?',desc:'Every good letter begins with a name.',field:'to',placeholder:'Their name or nickname…',type:'input',tease:'Next: choose how they feel ✨'},
+ {title:'How do they feel?',desc:'Pick the little world you want this note to create.',field:'mood',type:'choices',choices:['Warm and loved','Seen and understood','Cheered up','Missed a little','Celebrated','Calm and safe'],tease:'Next: tell them what matters ✨'},
+ {title:'What do you want them to know?',desc:'No perfect words needed. Just yours.',field:'message',placeholder:'I hope you know…',type:'textarea',tease:'Next: choose how it looks ✨'}
+];
+function renderStep(){let s=steps[step];$('#stepContent').innerHTML=`<h2>${s.title}</h2><p class="sub">${s.desc}</p>`+(s.type==='choices'?`<div class="choices">${s.choices.map(c=>`<button class="choice ${data.mood===c?'selected':''}" data-value="${c}">${c}</button>`).join('')}</div>`:`<${s.type==='input'?'input':'textarea'} class="field" id="stepField" ${s.type==='input'?'':'rows="5"'} placeholder="${s.placeholder}"></${s.type==='input'?'input':'textarea'}>`);
+if(s.type!=='choices'){$('#stepField').value=data[s.field];$('#stepField').oninput=e=>data[s.field]=e.target.value}else $$('.choice').forEach(b=>b.onclick=()=>{data.mood=b.dataset.value;$$('.choice').forEach(x=>x.classList.toggle('selected',x===b))});
+$('#progress').style.width=((step+1)/3*100)+'%';$('#stepCount').textContent=`0${step+1} / 03` ;$('#flame').style.transform=`scale(${1+step*.16})`;$('#back').style.visibility=step===0?'hidden':'visible';$('#next').textContent=step===2?'Choose the look →':'Continue →';$('#tease').textContent=s.tease}
+$('#next').onclick=()=>{if(step===0&&!data.to.trim()){ $('#stepField').focus();return }if(step===2&&!data.message.trim()){ $('#stepField').focus();return }if(step<2){step++;renderStep()}else{syncPreview();show('design')}};
+$('#back').onclick=()=>{if(step>0){step--;renderStep()}else show('welcome')};
+function syncPreview(){let greeting=data.to.trim()||'you';$('#previewTo').textContent='Dear '+greeting+',';$('#previewBody').textContent=data.message;$('#finalTo').textContent='Dear '+greeting+',';$('#finalBody').textContent=data.message;$('#friendPreview').textContent=data.message;$('#mystery').textContent=data.date?`Open on ${new Date(data.date+'T00:00:00').toLocaleDateString()}`:'Open when the moment feels right…';$('#sealMeta').textContent=`${data.weather} · ${data.paper} paper · ${data.font} handwriting` ;$('#previewBody').style.fontFamily=$('#finalBody').style.fontFamily=`"${data.font}"`;$('#designPreview').style.background=paperColor(data.paper);$('#finalPaper').style.background=paperColor(data.paper);$('#placed').innerHTML=data.stickers.map(x=>`<span class="sticker">${x}</span>`).join('');$('#finalStickers').innerHTML=$('#placed').innerHTML}
+function paperColor(p){return p==='rose'?'#f2ddd4':p==='night'?'#3a302f':p==='lined'?'repeating-linear-gradient(#fff9ef 0 31px,#e5d7c7 32px 33px)':'#fff9ef'}
+$$('#papers .chip').forEach(b=>b.onclick=()=>{data.paper=b.dataset.paper;$$('#papers .chip').forEach(x=>x.classList.toggle('active',x===b));syncPreview()});
+$$('#weather .chip').forEach(b=>b.onclick=()=>{data.weather=b.dataset.weather;$$('#weather .chip').forEach(x=>x.classList.toggle('active',x===b));document.body.style.filter=data.weather.includes('Starry')?'saturate(.78)':'none';syncPreview()});
+$$('#fonts .chip').forEach(b=>b.onclick=()=>{data.font=b.dataset.font;$$('#fonts .chip').forEach(x=>x.classList.toggle('active',x===b));syncPreview()});
+$$('.sticker').forEach(b=>{b.addEventListener('click',()=>{data.stickers.push(b.textContent);syncPreview()});b.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',b.textContent))});
+$('#designPreview').addEventListener('dragover',e=>e.preventDefault());$('#designPreview').addEventListener('drop',e=>{e.preventDefault();data.stickers.push(e.dataTransfer.getData('text/plain'));syncPreview()});
+$('#designBack').onclick=()=>show('wizard');$('#toExtras').onclick=()=>show('extras');$('#extrasBack').onclick=()=>show('design');
+$('#record').onclick=async()=>{try{let stream=await navigator.mediaDevices.getUserMedia({audio:true});recorder=new MediaRecorder(stream);let chunks=[];recorder.ondataavailable=e=>chunks.push(e.data);recorder.onstop=()=>{recordedUrl=URL.createObjectURL(new Blob(chunks,{type:'audio/webm'}));$('#audio').src=recordedUrl;$('#audio').classList.remove('hidden');stream.getTracks().forEach(t=>t.stop())};recorder.start();$('#record').disabled=true;$('#stopRecord').disabled=false}catch(e){alert('Microphone access is not available in this browser or page context.')}};
+$('#stopRecord').onclick=()=>{if(recorder&&recorder.state==='recording')recorder.stop();$('#record').disabled=false;$('#stopRecord').disabled=true};
+$('#toSeal').onclick=()=>{data.pin=$('#pin').value;data.date=$('#lockDate').value;syncPreview();show('seal')};$('#sealBack').onclick=()=>show('extras');
+$('#sealIt').onclick=()=>{burst('#finalBurst');show('done')};
+function letterText(){return `Dear ${data.to},\n\n${data.message}\n\n${data.weather}\n\nSent with love.`}
+$('#send').onclick=async()=>{let text=letterText();if(navigator.share){try{await navigator.share({title:'A little letter for you — dearly',text})}catch(e){}}else if(navigator.clipboard){await navigator.clipboard.writeText(text);$('#shareStatus').textContent='Letter copied. Paste it into your favourite message app.'}else $('#shareStatus').textContent='Your letter is ready to copy from the preview.'};
+function getShelf(){try{return JSON.parse(localStorage.getItem('dearly-shelf')||'[]')}catch(e){return []}}
+$('#saveShelf').onclick=()=>{let shelf=getShelf();shelf.unshift({to:data.to,message:data.message,mood:data.mood,date:new Date().toLocaleDateString()});localStorage.setItem('dearly-shelf',JSON.stringify(shelf.slice(0,30)));$('#shareStatus').textContent='Saved on this device ♡'};
+function renderShelf(){let s=getShelf();$('#shelfGrid').innerHTML=s.length?s.map(x=>`<div class="shelf-item"><strong>To ${escapeHtml(x.to||'you')}</strong>${escapeHtml(x.message.slice(0,90))}${x.message.length>90?'…':''}<p style="color:var(--muted)">${x.date}</p></div>`).join(''):'<p class="sub">Your shelf is waiting for its first letter.</p>'}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('#shelfBtn').onclick=()=>{renderShelf();show('shelf')};$('#shelfHome').onclick=()=>{reset();show('welcome')};
+$('#writeBack').onclick=()=>{reset();show('welcome')};
+function reset(){Object.assign(data,{to:'',mood:'Warm and loved',message:'',paper:'cream',weather:'☀️ Sunny',font:'Caveat',stickers:[],pin:'',date:''});step=0;$('#heroEnvelope').classList.remove('open');$('#pin').value='';$('#lockDate').value='';$('#record').disabled=false;$('#audio').classList.add('hidden');$('#shareStatus').textContent='Share a preview link or save it to your shelf.'}
+syncPreview();
+</script>
+</body></html>
